@@ -5,22 +5,24 @@ import Person from "@material-ui/icons/Person";
 import DashboardPage from "views/Dashboard/Dashboard.jsx";
 import UserProfile from "views/UserProfile/UserProfile.jsx";
 
+const prefix = process.env.PUBLIC_URL;
+
 const dashboardRoutes = [
   {
-    path: "/dashboard",
+    path: prefix + "/dashboard",
     sidebarName: "Dashboard",
-    navbarName: "Material Dashboard",
+    navbarName: "My Pic Stats",
     icon: Dashboard,
     component: DashboardPage
   },
   {
-    path: "/user",
+    path: prefix + "/user",
     sidebarName: "Profile",
     navbarName: "Profile",
     icon: Person,
     component: UserProfile
   },
-  { redirect: true, path: "/", to: "/dashboard", navbarName: "Redirect" }
+  { redirect: true, path: "/", to: prefix + "/dashboard", navbarName: "Redirect" }
 ];
 
 export default dashboardRoutes;

@@ -8,6 +8,7 @@ import Button from "components/CustomButtons/Button.jsx";
 import Card from "components/Card/Card.jsx";
 import CardAvatar from "components/Card/CardAvatar.jsx";
 import CardBody from "components/Card/CardBody.jsx";
+import DB from "db/DB.js";
 
 const styles = {
   cardCategoryWhite: {
@@ -37,40 +38,11 @@ class UserProfile extends React.Component {
   };
 
   componentWillMount() {
-
-    let u = window.location.href;
-    let token =
-      u.indexOf("#access_token=") === -1
-        ? null
-        : u.substring(u.indexOf("#access_token=") + 14);
-    
-    this.setState({token}, this.getUserData);
+    DB.init('user',state => this.setState(state));
 
   }
 
-  getUserData = () => {
-      if (!this.state.token) {
-        window.location =
-          "https://api.instagram.com/oauth/authorize/?client_id=f19cd80176bc4c62bb756838627ac944&redirect_uri=http://localhost:3000/user&response_type=token";
-      } else {
-        fetch(
-          "https://api.instagram.com/v1/users/self/?access_token=" +
-            this.state.token
-        )
-          .then(resp => {
-            return resp.json();
-          })
-          .then(json => {
-            console.log("json", json);
-            let { full_name, profile_picture, bio } = json.data;
-            this.setState({
-              name: full_name,
-              desc: bio,
-              url: profile_picture
-            });
-          });
-      }
-  }
+  
 
   showAvatar = () => {
     if (this.state.url) {

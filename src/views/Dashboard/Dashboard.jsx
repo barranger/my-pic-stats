@@ -6,13 +6,8 @@ import ChartistGraph from "react-chartist";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
 // @material-ui/icons
-import ContentCopy from "@material-ui/icons/ContentCopy";
 import Store from "@material-ui/icons/Store";
 import InfoOutline from "@material-ui/icons/InfoOutline";
-import Warning from "@material-ui/icons/Warning";
-import DateRange from "@material-ui/icons/DateRange";
-import LocalOffer from "@material-ui/icons/LocalOffer";
-import Update from "@material-ui/icons/Update";
 import ArrowUpward from "@material-ui/icons/ArrowUpward";
 import AccessTime from "@material-ui/icons/AccessTime";
 import Accessibility from "@material-ui/icons/Accessibility";
@@ -24,12 +19,12 @@ import GridItem from "components/Grid/GridItem.jsx";
 import Table from "components/Table/Table.jsx";
 import Tasks from "components/Tasks/Tasks.jsx";
 import CustomTabs from "components/CustomTabs/CustomTabs.jsx";
-import Danger from "components/Typography/Danger.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardIcon from "components/Card/CardIcon.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
+import DB from "db/DB";
 
 import { bugs, website, server } from "variables/general";
 
@@ -52,83 +47,49 @@ class Dashboard extends React.Component {
   handleChangeIndex = index => {
     this.setState({ value: index });
   };
+
+  componentWillMount() {
+    DB.init('dashboard',user => this.setState(user));
+  }
+
   render() {
     const { classes } = this.props;
+    const stats = DB.getStats() || {};
     return (
       <div>
         <Grid container>
-          <GridItem xs={12} sm={6} md={3}>
-            <Card>
-              <CardHeader color="warning" stats icon>
-                <CardIcon color="warning">
-                  <ContentCopy />
-                </CardIcon>
-                <p className={classes.cardCategory}>Used Space</p>
-                <h3 className={classes.cardTitle}>
-                  49/50 <small>GB</small>
-                </h3>
-              </CardHeader>
-              <CardFooter stats>
-                <div className={classes.stats}>
-                  <Danger>
-                    <Warning />
-                  </Danger>
-                  <a href="#pablo" onClick={e => e.preventDefault()}>
-                    Get more space
-                  </a>
-                </div>
-              </CardFooter>
-            </Card>
-          </GridItem>
-          <GridItem xs={12} sm={6} md={3}>
+          <GridItem xs={12} sm={6} md={4}>
             <Card>
               <CardHeader color="success" stats icon>
                 <CardIcon color="success">
                   <Store />
                 </CardIcon>
-                <p className={classes.cardCategory}>Revenue</p>
-                <h3 className={classes.cardTitle}>$34,245</h3>
+                <p className={classes.cardCategory}>Postings</p>
+                <h3 className={classes.cardTitle}>{stats.media}</h3>
               </CardHeader>
-              <CardFooter stats>
-                <div className={classes.stats}>
-                  <DateRange />
-                  Last 24 Hours
-                </div>
-              </CardFooter>
             </Card>
           </GridItem>
-          <GridItem xs={12} sm={6} md={3}>
+          <GridItem xs={12} sm={6} md={4}>
             <Card>
               <CardHeader color="danger" stats icon>
                 <CardIcon color="danger">
                   <InfoOutline />
                 </CardIcon>
-                <p className={classes.cardCategory}>Fixed Issues</p>
-                <h3 className={classes.cardTitle}>75</h3>
+                <p className={classes.cardCategory}>You are following</p>
+                <h3 className={classes.cardTitle}>{stats.follows}</h3>
               </CardHeader>
-              <CardFooter stats>
-                <div className={classes.stats}>
-                  <LocalOffer />
-                  Tracked from Github
-                </div>
-              </CardFooter>
+              
             </Card>
           </GridItem>
-          <GridItem xs={12} sm={6} md={3}>
+          <GridItem xs={12} sm={6} md={4}>
             <Card>
               <CardHeader color="info" stats icon>
                 <CardIcon color="info">
                   <Accessibility />
                 </CardIcon>
                 <p className={classes.cardCategory}>Followers</p>
-                <h3 className={classes.cardTitle}>+245</h3>
+                <h3 className={classes.cardTitle}>{stats.followed_by}</h3>
               </CardHeader>
-              <CardFooter stats>
-                <div className={classes.stats}>
-                  <Update />
-                  Just Updated
-                </div>
-              </CardFooter>
             </Card>
           </GridItem>
         </Grid>
