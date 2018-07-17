@@ -9,6 +9,7 @@ import Card from "components/Card/Card.jsx";
 import CardAvatar from "components/Card/CardAvatar.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import DB from "db/DB.js";
+import Instagram from 'services/Instagram'
 
 const styles = {
   cardCategoryWhite: {
@@ -42,7 +43,14 @@ class UserProfile extends React.Component {
 
   }
 
-  
+  showMedia() {
+    Instagram.getMyMedia(data => {console.log('my media', data)})
+  }
+
+  showComments() {
+    const testId = '1824065720393156834_189607138';
+    Instagram.getCommentsForMedia(testId, data => {console.log('my media', data)})
+  }
 
   showAvatar = () => {
     if (this.state.url) {
@@ -70,13 +78,8 @@ class UserProfile extends React.Component {
                   {this.state.name}
                 </h4>
                 <p className={classes.description}>{this.state.desc}</p>
-                <Button
-                  color="primary"
-                  round
-                  onClick={this.getUserData}
-                >
-                  Follow
-                </Button>
+                <Button color="primary" round onClick={this.showMedia}>My Media</Button>
+                <Button color="primary" round onClick={this.showComments}>Comments</Button>
               </CardBody>
             </Card>
           </GridItem>

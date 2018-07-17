@@ -45,6 +45,11 @@ const DB = {
 
   getStats() {
     return _stats;
+  },
+
+  //This needs to move to Instagram.js
+  getToken() {
+    return _token;
   }
 };
 
