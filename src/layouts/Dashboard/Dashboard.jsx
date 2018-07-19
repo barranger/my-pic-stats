@@ -19,6 +19,9 @@ import dashboardStyle from "assets/jss/material-dashboard-react/layouts/dashboar
 import image from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/reactlogo.png";
 
+import firebase from 'firebase/app';
+import 'firebase/auth';
+
 const switchRoutes = (
   <Switch>
     {dashboardRoutes.map((prop, key) => {
@@ -31,7 +34,9 @@ const switchRoutes = (
 
 class App extends React.Component {
   state = {
-    mobileOpen: false
+    mobileOpen: false,
+    authed: false,
+    loading: true
   };
   handleDrawerToggle = () => {
     this.setState({ mobileOpen: !this.state.mobileOpen });
@@ -40,9 +45,24 @@ class App extends React.Component {
     return this.props.location.pathname !== "/maps";
   }
   componentDidMount() {
+    
     if (navigator.platform.indexOf("Win") > -1) {
       const ps = new PerfectScrollbar(this.refs.mainPanel);
     }
+    this.removeListener = firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({
+          authed: true,
+          loading: false,
+        })
+      } else {
+        window.location = process.env.PUBLIC_URL + "/Login" || "/Login";
+        this.setState({
+          authed: false,
+          loading: false
+        })
+      }
+    })
   }
   componentDidUpdate(e) {
     if (e.history.location.pathname !== e.location.pathname) {
@@ -52,7 +72,13 @@ class App extends React.Component {
       }
     }
   }
+  componentWillUnmount () {
+    this.removeListener()
+  }
   render() {
+    if(this.state.loading || !this.state.authed) {
+      return (<h1>Loading</h1>);
+    }
     const { classes, ...rest } = this.props;
     return (
       <div className={classes.wrapper}>

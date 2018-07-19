@@ -6,7 +6,7 @@ This is a simple project that I am building to allow me to keep track of some of
 
 * ~~Save the access token to localstorage so we don't have to go back to instagram every time~~
 * ~~Integrate firebase authentication~~
-* Password Protect the site
+* ~~Password Protect the site~~
 * Come up with three thought out metrics and put the chrome up on the dashboard
 * move the access token to the cloud
 * Store the endpoint results in the cloud
