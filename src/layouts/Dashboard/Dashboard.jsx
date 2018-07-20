@@ -22,6 +22,8 @@ import logo from "assets/img/reactlogo.png";
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
+import {saveToken} from 'services/Firebase';
+
 const switchRoutes = (
   <Switch>
     {dashboardRoutes.map((prop, key) => {

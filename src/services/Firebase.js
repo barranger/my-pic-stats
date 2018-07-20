@@ -1,5 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/database';
 
 var config = {
   apiKey: "AIzaSyDiIYXdcaB7g4ZbIEu1g2DF9_DG9zdpRTc",
@@ -15,6 +16,7 @@ if(!firebase.apps.length) {
 }
 
 const auth = firebase.auth();
+const db = firebase.database();
 
 
 // Sign In
@@ -23,3 +25,14 @@ export const doSignInWithEmailAndPassword = (email, password) =>
 
   // Sign out
 export const doSignOut = () => auth.signOut();
+
+export const saveToken = (token) => {
+  db.ref(`users/${auth.currentUser.uid}`).set({token});
+}
+
+export const getAccessToken = (cb) => {
+  db.ref(`users/${auth.currentUser.uid}`).once("value").then(val => {
+    const obj = val.val();
+    cb(obj ? obj.token : null)
+  })
+ }

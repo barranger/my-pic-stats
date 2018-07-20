@@ -18,7 +18,8 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardIcon from "components/Card/CardIcon.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
-import DB from "db/DB";
+import Instagram from "services/Instagram";
+import DB from "db/DB"
 
 import {
   dailySalesChart,
@@ -46,7 +47,7 @@ class Dashboard extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const stats = DB.getStats() || {};
+    const stats = Instagram.getStats() || {};
     return (
       <div>
         <Grid container>
