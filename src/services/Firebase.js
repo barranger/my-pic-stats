@@ -30,6 +30,10 @@ export const saveToken = (token) => {
   db.ref(`users/${auth.currentUser.uid}`).set({token});
 }
 
+export const saveStats = (stats) => {
+  db.ref(`stats/${auth.currentUser.uid}/${new Date().getTime()}`).set({stats});
+}
+
 export const getAccessToken = (cb) => {
   db.ref(`users/${auth.currentUser.uid}`).once("value").then(val => {
     const obj = val.val();

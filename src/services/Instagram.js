@@ -1,5 +1,5 @@
 import DB from "db/DB";
-import {saveToken} from 'services/Firebase';
+import {saveToken, saveStats} from 'services/Firebase';
 
 let _token = null;
 let _user = null;
@@ -37,6 +37,7 @@ const Instagram = {
         return resp.json();
       })
       .then(json => {
+        saveStats(json.data.counts);
         let { full_name, profile_picture, bio, counts } = json.data;
 
         _stats = counts;
