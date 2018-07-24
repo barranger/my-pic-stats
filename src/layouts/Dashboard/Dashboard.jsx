@@ -48,9 +48,9 @@ class App extends React.Component {
   }
   componentDidMount() {
     
-    if (navigator.platform.indexOf("Win") > -1) {
-      const ps = new PerfectScrollbar(this.refs.mainPanel);
-    }
+    // if (navigator.platform.indexOf("Win") > -1) {
+    //   const ps = new PerfectScrollbar(this.refs.mainPanel);
+    // }
     this.removeListener = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.setState({
