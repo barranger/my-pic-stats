@@ -14,6 +14,6 @@ This is a simple project that I am building to allow me to keep track of some of
 * Come up with three thought out metrics and put the chrome up on the dashboard
 * Fix db access rules
 * Fix initial user login bug (data doesn't show until navigation)
-* Add redux
+* ~~Add redux~~
 * Grab data from redux
 
